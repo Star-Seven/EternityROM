@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# shellcheck disable=SC1007,SC2164,SC2181,SC2291
+# shellcheck disable=SC1007,SC2164,SC2291
 
 # [
 # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/envsetup.sh#18
@@ -74,7 +74,7 @@ BUILD()
     for CMD in "${CMDS[@]}"; do
         local OUT
         OUT="$(eval "$CMD" 2>&1)"
-        if [ $? -ne 0 ]; then
+        if $?; then
             echo -e    '\033[1;31m'"BUILD FAILED!"'\033[0m\n' >&2
             echo -e    '\033[0;31m'"$CMD"'\033[0m\n' >&2
             echo -n -e '\033[0;33m' >&2

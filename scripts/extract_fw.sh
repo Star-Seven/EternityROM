@@ -71,12 +71,16 @@ EXTRACT_KERNEL_BINARIES()
 
     LOG_STEP_IN "- Extracting kernel binaries"
 
+    mkdir -p "$FW_DIR/${MODEL}_${CSC}/kernel"
     for f in $FILES; do
         EXTRACT_FILE_FROM_TAR "$AP_TAR" "$f" || exit 1
+        [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
         if [ "$f" = "dt.img" ]; then
             LOG_STEP_IN "- Renaming dt.img to dtb.img"
             mv -f "$FW_DIR/${MODEL}_${CSC}/dt.img" "$FW_DIR/${MODEL}_${CSC}/kernel/dtb.img"
             LOG_STEP_OUT
+        else
+            mv -f "$FW_DIR/${MODEL}_${CSC}/$f" "$FW_DIR/${MODEL}_${CSC}/kernel/$f"
         fi
     done
 

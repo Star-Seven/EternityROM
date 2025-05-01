@@ -16,9 +16,9 @@
 #
 
 # UN1CA configuration file
-ROM_VERSION="1.0.0-nxt"
+ROM_VERSION="5.0 beta IT'S NOT READY DON't BEG FOR IT"
 ROM_VERSION+="-$(git rev-parse --short HEAD)"
-ROM_CODENAME="Nexus"
+ROM_CODENAME="EternityROM"
 
 # Source ROM firmware
 case "$TARGET_SINGLE_SYSTEM_IMAGE" in

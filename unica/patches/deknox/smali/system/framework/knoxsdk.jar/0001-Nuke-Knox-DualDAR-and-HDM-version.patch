@@ -1,15 +1,11 @@
-From 3c64d92b925946092ef9b310b6108b6f5d0d55bf Mon Sep 17 00:00:00 2001
-From: ExtremeXT <75576145+ExtremeXT@users.noreply.github.com>
-Date: Sat, 26 Apr 2025 21:22:29 +0300
+From e42ce44c4d1d540f7a42b971fed7ebe84482ce68 Mon Sep 17 00:00:00 2001
+From: Ocin4ever <85343782+Ocin4ever@users.noreply.github.com>
+Date: Sat, 3 May 2025 22:18:44 +0200
 Subject: [PATCH] Nuke Knox DualDAR and HDM version
 
----
- .../android/knox/ddar/DualDARPolicy.smali     |  2 +-
- .../samsung/android/knox/hdm/HdmManager.smali | 38 +------------------
- 2 files changed, 3 insertions(+), 37 deletions(-)
-
+Co-Authored-By: ExtremeXT <75576145+ExtremeXT@users.noreply.github.com>
 diff --git a/smali/com/samsung/android/knox/ddar/DualDARPolicy.smali b/smali/com/samsung/android/knox/ddar/DualDARPolicy.smali
-index fe43079f..bab7507d 100644
+index 50b5f785bd..6211f7b5a8 100644
 --- a/smali/com/samsung/android/knox/ddar/DualDARPolicy.smali
 +++ b/smali/com/samsung/android/knox/ddar/DualDARPolicy.smali
 @@ -96,7 +96,7 @@
@@ -22,7 +18,7 @@ index fe43079f..bab7507d 100644
      return-object v0
  .end method
 diff --git a/smali/com/samsung/android/knox/hdm/HdmManager.smali b/smali/com/samsung/android/knox/hdm/HdmManager.smali
-index 0c23a3b6..70593f46 100644
+index d10825d611..f983fbd16b 100644
 --- a/smali/com/samsung/android/knox/hdm/HdmManager.smali
 +++ b/smali/com/samsung/android/knox/hdm/HdmManager.smali
 @@ -35,7 +35,7 @@
@@ -71,7 +67,7 @@ index 0c23a3b6..70593f46 100644
 -    goto :goto_0
 -
 -    :cond_0
--    const-string v0, "2.0"
+-    const-string v0, "2.0 - 95"
 +    const/4 v0, 0x0
  
 -    :goto_0
@@ -79,5 +75,5 @@ index 0c23a3b6..70593f46 100644
  .end method
  
 -- 
-2.45.2
+2.43.0
 

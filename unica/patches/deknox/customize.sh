@@ -27,7 +27,6 @@ DELETE_FROM_WORK_DIR "system" "system/lib64/libtlc_blockchain_comm.so"
 DELETE_FROM_WORK_DIR "system" "system/lib64/libtlc_blockchain_keystore.so"
 DELETE_FROM_WORK_DIR "system" "system/lib64/libtlc_blockchain_direct_comm.so"
 DELETE_FROM_WORK_DIR "system" "system/lib64/vendor.samsung.hardware.tlc.blockchain@1.0.so"
-DELETE_FROM_WORK_DIR "system" "system/lib64/vendor.samsung.hardware.tlc.blockchain-V1-ndk.so"
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_FRAMEWORK_SUPPORT_BLOCKCHAIN_SERVICE" --delete
 
 # Payment
@@ -36,7 +35,6 @@ DELETE_FROM_WORK_DIR "system" "system/lib64/libtlc_payment_direct_comm.so"
 DELETE_FROM_WORK_DIR "system" "system/lib64/libtlc_payment_spay.so"
 DELETE_FROM_WORK_DIR "system" "system/lib64/libtlc_payment_comm.so"
 DELETE_FROM_WORK_DIR "system" "system/lib64/vendor.samsung.hardware.tlc.payment@1.0.so"
-DELETE_FROM_WORK_DIR "system" "system/lib64/vendor.samsung.hardware.tlc.payment-V1-ndk.so"
 
 # MPOS
 DELETE_FROM_WORK_DIR "system" "system/etc/permissions/privapp-permissions-com.samsung.android.knox.mpos.xml"

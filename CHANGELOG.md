@@ -1,0 +1,45 @@
+# EternityROM changelog
+
+## 5.0
+- One UI 7 support
+- Opensource the project:
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT) [Salvo Giangreco](https://github.com/salvogiangri) for UN1CA & ExtremeROM!
+- Rebased on SM-S926B (S24+)
+- Switched to erofs:
+  - Improve responsiveness
+  - Faster loading time
+- Add S25 fancy AI features:
+  - Now Brief
+  - Voice Eraser
+- Zygote is now running in 64bits only:
+  - Better performance
+  - Gain free space without 32bits libs
+- Upstreamed Kernel to 4.14.356 to allow compatibility:
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- Vulkan API enabled natively by default:
+  - Better performance and power usage
+  - Some apps may still run on OpenGL
+- Fix Samsung Camera:
+  - 0.5x is still broken
+  - Look at the issues section for more info
+- Improved Deknox 
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- Reworked debloat list:
+  - ARemojis are back!
+  - Language packs working now
+- Add adaptative color tone
+- Fix SmartThings tile beeing inactive
+  - Thanks [Duhań](https://github.com/duhansysl)
+- Preload Samsung apps:
+  - They can be unistalled!
+  - Calculator
+  - Notes
+  - Voice Recording
+  - Samsung Internet
+- Improve non-QHD devices resolution accuracy 
+- Bringback Outdoor mode
+- Extra Brightness visually supported:
+  - Screen max brightness is the same, just the logic was applied
+- More Battery Info reverted due to unreliability
+- Switched from SmartManager to DeviceCare
+

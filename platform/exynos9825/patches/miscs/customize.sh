@@ -9,6 +9,9 @@
 echo "Enabling updateable APEX images"
 SET_PROP "vendor" "ro.apex.updatable" "true"
 
+echo "Enabling IncrementalFS"
+SET_PROP "vendor" "ro.incremental.enable" "yes"
+
 echo "Disabling A2DP Offload"
 SET_PROP "system" persist.bluetooth.a2dp_offload.disabled "true"
 

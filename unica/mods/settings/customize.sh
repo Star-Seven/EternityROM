@@ -11,6 +11,9 @@
 #     sed -i "s/SM-A236B/SM-S938B/g" "$APKTOOL_DIR/$f"
 # done
 
+echo "Enabling Cached App Freezer"
+SET_PROP "system" "persist.device_config.activity_manager_native_boot.use_freezer" "true"
+
 # ro.build.2ndbrand is always "false"
 echo "Disabling ASKS"
 sed -i "s/ro.build.official.release/ro.build.2ndbrand/g" "$APKTOOL_DIR/system/framework/services.jar/smali/com/android/server/asks/ASKSManagerService.smali"

@@ -118,7 +118,12 @@ GENERATE_OP_LIST()
         $HAS_SYSTEM && echo "# Add partition system to group $TARGET_SUPER_GROUP_NAME"
         $HAS_SYSTEM && echo "add system $TARGET_SUPER_GROUP_NAME"
         $HAS_VENDOR && echo "# Add partition vendor to group $TARGET_SUPER_GROUP_NAME"
-        $HAS_VENDOR && ech Add partition odm to group $TARGET_SUPER_GROUP_NAME"
+        $HAS_VENDOR && echo "add vendor $TARGET_SUPER_GROUP_NAME"
+        $HAS_PRODUCT && echo "# Add partition product to group $TARGET_SUPER_GROUP_NAME"
+        $HAS_PRODUCT && echo "add product $TARGET_SUPER_GROUP_NAME"
+        $HAS_SYSTEM_EXT && echo "# Add partition system_ext to group $TARGET_SUPER_GROUP_NAME"
+        $HAS_SYSTEM_EXT && echo "add system_ext $TARGET_SUPER_GROUP_NAME"
+        $HAS_ODM && echo "# Add partition odm to group $TARGET_SUPER_GROUP_NAME"
         $HAS_ODM && echo "add odm $TARGET_SUPER_GROUP_NAME"
         $HAS_VENDOR_DLKM && echo "# Add partition vendor_dlkm to group $TARGET_SUPER_GROUP_NAME"
         $HAS_VENDOR_DLKM && echo "add vendor_dlkm $TARGET_SUPER_GROUP_NAME"
@@ -638,11 +643,10 @@ while IFS= read -r f; do
     EVAL "img2sdat -o \"$TMP_DIR\" -B \"$TMP_DIR/$PARTITION.map\" \"$f\"" || exit 1
     rm -f "$f" "$TMP_DIR/$PARTITION.map"
 
-    if ! $DEBUG; then
-        LOG "- Compressing $PARTITION.new.dat"
-        # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
-        EVAL "brotli --quality=6 --output=\"$TMP_DIR/$PARTITION.new.dat.br\" \"$TMP_DIR/$PARTITION.new.dat\"" || exit 1
-        rm -f "$TMP_DIR/$PARTITION.new.dat"
+    LOG "- Compressing $PARTITION.new.dat"
+    # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
+    EVAL "brotli --quality=6 --output=\"$TMP_DIR/$PARTITION.new.dat.br\" \"$TMP_DIR/$PARTITION.new.dat\"" || exit 1
+    rm -f "$TMP_DIR/$PARTITION.new.dat"
     fi
 done < <(find "$TMP_DIR" -maxdepth 1 -type f -name "*.img")
 

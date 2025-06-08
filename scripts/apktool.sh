@@ -60,11 +60,8 @@ BUILD()
                 DEX_FILENAME="$(basename "${d//smali_/}").dex"
             fi
 
-            EVAL "smali a -a \"$DEX_API_LEVEL\" -j \"$(nproc)\" -o \"$OUTPUT_PATH/$DEX_FILENAME\" \"$d\"" &
+            EVAL "smali a -a \"$DEX_API_LEVEL\" -j \"$(nproc)\" -o \"$OUTPUT_PATH/$DEX_FILENAME\" \"$d\"" || exit 1
         done < <(find "$OUTPUT_PATH" -maxdepth 1 -type d -name "smali*")
-
-        # shellcheck disable=SC2046
-        wait $(jobs -p) || exit 1
     fi
 
     # Copy original META-INF
@@ -72,7 +69,7 @@ BUILD()
     cp -a "$OUTPUT_PATH/original/META-INF" "$OUTPUT_PATH/build/apk/META-INF"
 
     # Build APK with --shorten-resource-paths (https://developer.android.com/tools/aapt2#optimize_options)
-    EVAL "apktool b -j \"$(nproc)\" -p \"$FRAMEWORK_DIR\" -t \"$FRAMEWORK_TAG\" -srp \"$OUTPUT_PATH\"" || exit 1
+    EVAL "apktool b -j \"$(nproc)\" -p \"$FRAMEWORK_DIR\" -t \"$FRAMEWORK_TAG\" \"$OUTPUT_PATH\"" || exit 1
 
     find "$OUTPUT_PATH" -maxdepth 1 -type f -name "*.dex" -delete
 
@@ -147,11 +144,8 @@ DECODE()
             # - Disabled debug info
             # - Use .locals directive instead of the .registers one
             # - Use a sequential numbering scheme for labels
-            EVAL "baksmali d -a \"$DEX_API_LEVEL\" --ac false --di false -j \"$(nproc)\" -l -o \"$OUTPUT_PATH/$SMALI_OUT\" --sl \"$f\"" &
+            EVAL "baksmali d -a \"$DEX_API_LEVEL\" --ac false --di false -j \"$(nproc)\" -l -o \"$OUTPUT_PATH/$SMALI_OUT\" --sl \"$f\"" || exit 1
         done < <(find "$OUTPUT_PATH" -maxdepth 1 -type f -name "*.dex")
-
-        # shellcheck disable=SC2046
-        wait $(jobs -p) || exit 1
 
         find "$OUTPUT_PATH" -maxdepth 1 -type f -name "*.dex" -delete
     fi

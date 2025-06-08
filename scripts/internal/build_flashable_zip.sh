@@ -647,7 +647,6 @@ while IFS= read -r f; do
     # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
     EVAL "brotli --quality=6 --output=\"$TMP_DIR/$PARTITION.new.dat.br\" \"$TMP_DIR/$PARTITION.new.dat\"" || exit 1
     rm -f "$TMP_DIR/$PARTITION.new.dat"
-    fi
 done < <(find "$TMP_DIR" -maxdepth 1 -type f -name "*.img")
 
 if [ -d "$WORK_DIR/kernel" ]; then

@@ -1,5 +1,31 @@
 # EternityROM changelog
 
+## 5.1
+- Update to May SPL (S926BXXU6BYE7)
+- Upstream KernelSU-Next to v1.0.7
+- Fixed SPen support:
+  - No, AirAction is still broken
+- Add NFC cases support
+- Import S24 Ultra dynamic wallpapers
+- Use EroFS for non-system partitions:
+  - Better performance
+- Improve HFR patch:
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- Add GoodLock options for gestures by default:
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- Enable Wi-Fi 6 hotspot:
+  - This is experimental and needs to be tested
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- Tweaks:
+  - Disable ASKS
+  - Disable ACH
+  - Enable cached app freezer
+  - Add support for UFFD
+  - Minor fixup for GameBooster
+  - Remove renderscript (deprecated)
+  - Use IncrementalFS
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+
 ## 5.0
 - One UI 7 support
 - Opensource the project:

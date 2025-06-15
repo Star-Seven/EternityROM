@@ -14,9 +14,9 @@
 - Add GoodLock options for gestures by default:
   - Thanks [ExtremeXT](https://github.com/ExtremeXT)
 - Enable Wi-Fi 6 hotspot:
-  - This is experimental and needs to be tested
   - Thanks [ExtremeXT](https://github.com/ExtremeXT)
 - Tweaks:
+  - OneUI 7 boot animation
   - Disable ASKS
   - Disable ACH
   - Enable cached app freezer

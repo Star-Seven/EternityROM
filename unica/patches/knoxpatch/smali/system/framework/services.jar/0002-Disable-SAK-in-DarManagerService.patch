@@ -1,18 +1,18 @@
-From b8a04bf78c6f1d52d78568fbeacf92d77912cc47 Mon Sep 17 00:00:00 2001
+From 7b577846aa369b63c96af54bd4e7fc99f40054b2 Mon Sep 17 00:00:00 2001
 From: Salvo Giangreco <giangrecosalvo9@gmail.com>
-Date: Thu, 29 May 2025 10:27:26 +0200
+Date: Fri, 20 Jun 2025 21:11:20 +0200
 Subject: [PATCH] Disable SAK in DarManagerService
 
 Signed-off-by: Ocin4ever <85343782+Ocin4ever@users.noreply.github.com>
 ---
- .../server/knox/dar/DarManagerService.smali   | 491 +-----------------
- 1 file changed, 13 insertions(+), 478 deletions(-)
+ .../server/knox/dar/DarManagerService.smali   | 493 +-----------------
+ 1 file changed, 14 insertions(+), 479 deletions(-)
 
-diff --git a/services/smali/com/android/server/knox/dar/DarManagerService.smali b/services/smali/com/android/server/knox/dar/DarManagerService.smali
-index 3b570b804..fc9c4e9a1 100644
---- a/services/smali/com/android/server/knox/dar/DarManagerService.smali
-+++ b/services/smali/com/android/server/knox/dar/DarManagerService.smali
-@@ -456,59 +456,11 @@
+diff --git a/smali/com/android/server/knox/dar/DarManagerService.smali b/smali/com/android/server/knox/dar/DarManagerService.smali
+index 3b570b8046..aa88aba57e 100644
+--- a/smali/com/android/server/knox/dar/DarManagerService.smali
++++ b/smali/com/android/server/knox/dar/DarManagerService.smali
+@@ -456,58 +456,10 @@
  .end method
  
  .method public final checkDeviceIntegrity([Ljava/security/cert/Certificate;)Z
@@ -68,15 +68,13 @@ index 3b570b804..fc9c4e9a1 100644
 -    invoke-virtual {p0}, Ljava/security/cert/CertificateParsingException;->printStackTrace()V
 -
 -    :cond_1
--    return v0
-+    .locals 0
++    .locals 1
 + 
-+    const/4 p0, 0x1
++    const/4 v0, 0x1
 + 
-+    return p0
+     return v0
  .end method
  
- .method public final checkSystemPermission()V
 @@ -1834,259 +1786,11 @@
  .end method
  
@@ -334,11 +332,11 @@ index 3b570b804..fc9c4e9a1 100644
 -    invoke-static {v4, v5}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 -
 -    throw v0
-+    .locals 0
++    .locals 1
 + 
-+    const/4 p0, 0x1
++    const/4 v0, 0x1
 + 
-+    return p0
++    return v0
  .end method
  
  .method public final isDualDarDoSupported()Z
@@ -370,12 +368,9 @@ index 3b570b804..fc9c4e9a1 100644
 -
 -    invoke-static {p0, v0}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
 -
-+    .locals 0
-+ 
-     const/4 p0, 0x1
+-    const/4 p0, 0x1
 -
-+ 
-     return p0
+-    return p0
 -
 -    :cond_0
 -    iget-object v1, p0, Lcom/android/server/knox/dar/DarManagerService;->mInjector:Lcom/android/server/knox/dar/DarManagerService$Injector;
@@ -523,9 +518,14 @@ index 3b570b804..fc9c4e9a1 100644
 -    invoke-static {v1, v2}, Landroid/os/Binder;->restoreCallingIdentity(J)V
 -
 -    throw v0
++    .locals 1
++ 
++    const/4 v0, 0x1
++ 
++    return v0
  .end method
  
  .method public final isLicensed()I
 -- 
-2.39.5 (Apple Git-154)
+2.43.0
 

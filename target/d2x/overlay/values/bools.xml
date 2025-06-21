@@ -14,4 +14,5 @@
     <bool name="config_eye_comfort_solution_enabled">true</bool>
     <bool name="config_mdnie_scenario_control_enabled">true</bool>
     <bool name="config_systemCaptionsServiceCallsEnabled">true</bool>
+    <bool name="config_ignoreRssnrSignalLevel">true</bool>
 </resources>

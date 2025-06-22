@@ -73,7 +73,7 @@ case "$1" in
         FIRMWARE="SM-S921B/EUX/350070120202022"
         ;;
     "prebuilts/samsung/e3qxxx")
-        FIRMWARE="SM-S928B/EUX/355731670945491"
+        FIRMWARE="SM-S928B/EUX/355894894194085"
         ;;
     "prebuilts/samsung/gts10fewifixx")
         FIRMWARE="SM-X520/EUX/R52Y30G0M0T"

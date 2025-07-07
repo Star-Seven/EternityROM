@@ -1,4 +1,4 @@
-    if [ ! -f "$WORK_DIR/system/system/lib64/libbluetooth_jni.so" ]; then
+if [ ! -f "$WORK_DIR/system/system/lib64/libbluetooth_jni.so" ]; then
     [ -d "$TMP_DIR" ] && rm -rf "$TMP_DIR"
     mkdir -p "$TMP_DIR"
 

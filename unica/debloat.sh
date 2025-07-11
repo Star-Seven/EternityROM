@@ -31,7 +31,7 @@ etc/dpolicy
 # Samsung SIM Unlock
 SYSTEM_DEBLOAT+="
 system/bin/ssud
-system/etc/init/ssu_e2sxxx.rc
+system/etc/init/ssu_r12sxxx.rc
 system/etc/init/ssu.rc
 system/etc/permissions/privapp-permissions-com.samsung.ssu.xml
 system/etc/sysconfig/samsungsimunlock.xml
@@ -51,7 +51,8 @@ recovery-from-boot.p
 # Apps debloat
 PRODUCT_DEBLOAT+="
 app/AssistantShell
-app/DuoStub
+app/Chrome64
+app/Duo
 app/Gmail2
 app/Maps
 app/YouTube

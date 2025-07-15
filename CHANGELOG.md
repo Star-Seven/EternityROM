@@ -1,5 +1,21 @@
 # EternityROM changelog
 
+## 5.3
+- Rebased on SM-S721B (S24 FE):
+  - Smoother, faster and lighter
+  - Ported missing features, such as EnvironmentAdaptiveDisplay
+- Upstream KernelSU-Next to v1.0.8
+- Fixed Routines beeing blank
+- Slight rework of the debloat list
+- Fixed the ROM name in Settings
+- Fixed HDR10+ recording:
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- S25 Ultra CSCs and Sounds:
+  - S24 FE is missing some CSCs
+  - Thanks [ExtremeXT](https://github.com/ExtremeXT)
+- Fixed Hotwords
+- General cleanup in the build system
+
 ## 5.2
 - Update to June SPL (S926BXXS7BYEC)
 - Fixed Secure Folder

@@ -1,9 +1,10 @@
-From b9d9447281f9b22663b345aa04c73ce63653f59d Mon Sep 17 00:00:00 2001
+From 82720104b4848363f598bf0019070f9ce6d95b58 Mon Sep 17 00:00:00 2001
 From: Ocin4ever <85343782+Ocin4ever@users.noreply.github.com>
-Date: Wed, 9 Jul 2025 18:24:55 +0200
+Date: Thu, 17 Jul 2025 22:03:40 +0200
 Subject: [PATCH] Enable EAD
 
 ---
+ .../appops/AppOpsControllerImpl.smali         |  40 ++-
  ...DetailAdapter$initBrightnessDetail$8.smali |  38 +++
  .../brightness/BrightnessDetailAdapter.smali  | 272 +++++++++++++-----
  .../QuickBrightnessSeadView$Companion.smali   |  21 ++
@@ -12,7 +13,7 @@ Subject: [PATCH] Enable EAD
  ...kBrightnessSeadView$createDialog$1$1.smali |  62 ++++
  ...sSeadView$initBrightnessDetail$1$1$1.smali | 122 ++++++++
  .../brightness/QuickBrightnessSeadView.smali  |  35 +++
- 8 files changed, 730 insertions(+), 73 deletions(-)
+ 9 files changed, 761 insertions(+), 82 deletions(-)
  create mode 100644 smali_classes2/com/android/systemui/settings/brightness/BrightnessDetailAdapter$initBrightnessDetail$8.smali
  create mode 100644 smali_classes2/com/android/systemui/settings/brightness/QuickBrightnessSeadView$Companion.smali
  create mode 100644 smali_classes2/com/android/systemui/settings/brightness/QuickBrightnessSeadView$brightnessSeadSwitch$1$1.smali
@@ -21,6 +22,102 @@ Subject: [PATCH] Enable EAD
  create mode 100644 smali_classes2/com/android/systemui/settings/brightness/QuickBrightnessSeadView$initBrightnessDetail$1$1$1.smali
  create mode 100644 smali_classes2/com/android/systemui/settings/brightness/QuickBrightnessSeadView.smali
 
+diff --git a/smali/com/android/systemui/appops/AppOpsControllerImpl.smali b/smali/com/android/systemui/appops/AppOpsControllerImpl.smali
+index 2eb309bcd8..e1ebd5addf 100644
+--- a/smali/com/android/systemui/appops/AppOpsControllerImpl.smali
++++ b/smali/com/android/systemui/appops/AppOpsControllerImpl.smali
+@@ -751,7 +751,7 @@
+ .method public final isUserVisible(Ljava/lang/String;Ljava/lang/String;)Z
+     .locals 4
+ 
+-    const-string v0, "com.samsung.sightcare"
++    const-string v0, "com.samsung.android.sead"
+ 
+     invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+ 
+@@ -759,6 +759,8 @@
+ 
+     const/4 v2, 0x0
+ 
++    const-string v3, "android"
++
+     if-eqz v1, :cond_0
+ 
+     iget-object v1, p0, Lcom/android/systemui/appops/AppOpsControllerImpl;->mContext:Landroid/content/Context;
+@@ -767,24 +769,44 @@
+ 
+     move-result-object v1
+ 
+-    const-string v3, "android"
++    invoke-virtual {v1, v3, v0}, Landroid/content/pm/PackageManager;->checkSignatures(Ljava/lang/String;Ljava/lang/String;)I
++
++    move-result v0
++
++    if-eqz v0, :cond_1
++
++    :cond_0
++    const-string v0, "com.samsung.sightcare"
++
++    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_2
++
++    iget-object v1, p0, Lcom/android/systemui/appops/AppOpsControllerImpl;->mContext:Landroid/content/Context;
++
++    invoke-virtual {v1}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
++
++    move-result-object v1
+ 
+     invoke-virtual {v1, v3, v0}, Landroid/content/pm/PackageManager;->checkSignatures(Ljava/lang/String;Ljava/lang/String;)I
+ 
+     move-result v0
+ 
+-    if-nez v0, :cond_0
++    if-nez v0, :cond_2
+ 
++    :cond_1
+     return v2
+ 
+-    :cond_0
++    :cond_2
+     iget-object p0, p0, Lcom/android/systemui/appops/AppOpsControllerImpl;->mContext:Landroid/content/Context;
+ 
+     invoke-static {p0, p1}, Landroid/permission/PermissionManager;->shouldShowPackageForIndicatorCached(Landroid/content/Context;Ljava/lang/String;)Z
+ 
+     move-result p0
+ 
+-    if-nez p0, :cond_1
++    if-nez p0, :cond_3
+ 
+     const-string p0, "SLocationService"
+ 
+@@ -792,7 +814,7 @@
+ 
+     move-result p0
+ 
+-    if-nez p0, :cond_1
++    if-nez p0, :cond_3
+ 
+     const-string p0, "Biometrics_FaceService"
+ 
+@@ -800,12 +822,12 @@
+ 
+     move-result p0
+ 
+-    if-eqz p0, :cond_2
++    if-eqz p0, :cond_4
+ 
+-    :cond_1
++    :cond_3
+     const/4 v2, 0x1
+ 
+-    :cond_2
++    :cond_4
+     return v2
+ .end method
+ 
 diff --git a/smali_classes2/com/android/systemui/settings/brightness/BrightnessDetailAdapter$initBrightnessDetail$8.smali b/smali_classes2/com/android/systemui/settings/brightness/BrightnessDetailAdapter$initBrightnessDetail$8.smali
 new file mode 100644
 index 0000000000..5f4e9f3872
@@ -1020,5 +1117,5 @@ index 0000000000..9ded89c20d
 +    return-void
 +.end method
 -- 
-2.48.1
+2.43.0
 

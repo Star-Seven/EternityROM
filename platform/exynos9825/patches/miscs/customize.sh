@@ -12,6 +12,9 @@ SET_PROP "vendor" "ro.apex.updatable" "true"
 echo "Enabling IncrementalFS"
 SET_PROP "vendor" "ro.incremental.enable" "yes"
 
+echo "Enabling FS Verity"
+SET_PROP "vendor" "ro.apk_verity.mode" "2"
+
 echo "Disabling A2DP Offload"
 SET_PROP "system" persist.bluetooth.a2dp_offload.disabled "true"
 

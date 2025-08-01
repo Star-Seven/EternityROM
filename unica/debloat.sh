@@ -50,7 +50,6 @@ recovery-from-boot.p
 
 # Apps debloat
 PRODUCT_DEBLOAT+="
-app/AssistantShell
 app/Chrome64
 app/Duo
 app/Gmail2

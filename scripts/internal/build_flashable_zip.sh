@@ -239,6 +239,8 @@ GENERATE_OTA_METADATA()
 GENERATE_UPDATER_SCRIPT()
 {
     local SCRIPT_FILE="$TMP_DIR/META-INF/com/google/android/updater-script"
+    local BROTLI_EXTENSION
+    $DEBUG || BROTLI_EXTENSION=".br"
 
     local PARTITION_COUNT=0
     local HAS_UP_PARAM=false

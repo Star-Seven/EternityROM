@@ -1,4 +1,5 @@
 system 0 0 755 capabilities=0x0
+system/app 0 0 755 capabilities=0x0
 system/app/AirGlance 0 0 755 capabilities=0x0
 system/app/AirGlance/AirGlance.apk 0 0 644 capabilities=0x0
 system/app/LiveDrawing 0 0 755 capabilities=0x0

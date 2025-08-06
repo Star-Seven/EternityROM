@@ -3,9 +3,7 @@ updates:
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
-        interval: "monthly"
-    ignore:
-      - dependency-name: "external/erofs-utils"
+        interval: "daily"
 
   - package-ecosystem: "github-actions"
     directory: "/"

@@ -305,16 +305,9 @@ if [ ! -f "$FW_DIR/${MODEL}_${REGION}/vendor/etc/permissions/android.hardware.st
     LOG_STEP_OUT
 fi
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-DECODE_APK "system" "system/framework/semwifi-service.jar"
-=======
->>>>>>> 473c257e (unica: switch to log utils)
 DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 DECODE_APK "system" "system/framework/semwifi-service.jar"
 
->>>>>>> 6e352a63 (unica: follow up of 27664c2e)
 if $SOURCE_SUPPORT_WIFI_7; then
     if ! $TARGET_SUPPORT_WIFI_7; then
         LOG_STEP_IN "- Applying Wi-Fi 7 patches"

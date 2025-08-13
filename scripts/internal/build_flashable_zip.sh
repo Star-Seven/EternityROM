@@ -84,7 +84,6 @@ GENERATE_BUILD_INFO()
     {
         echo "device=$TARGET_CODENAME"
         echo "version=$ROM_VERSION"
-        echo "commit=$ROM_COMMIT"
         echo "timestamp=$ROM_BUILD_TIMESTAMP"
         echo "security_patch_version=$(GET_PROP "system" "ro.build.version.security_patch")"
     } > "$BUILD_INFO_FILE"
@@ -270,16 +269,16 @@ GENERATE_UPDATER_SCRIPT()
     [ -f "$TMP_DIR/init_boot.img" ] && HAS_INIT_BOOT=true
     [ -f "$TMP_DIR/vendor_boot.img" ] && HAS_VENDOR_BOOT=true
     [ -f "$TMP_DIR/unsparse_super_empty.img" ] && HAS_SUPER_EMPTY=true
-    [ -f "$TMP_DIR/system.new.dat.br" ] && HAS_SYSTEM=true
-    [ -f "$TMP_DIR/vendor.new.dat.br" ] && HAS_VENDOR=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/product.new.dat.br" ] && HAS_PRODUCT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/system_ext.new.dat.br" ] && HAS_SYSTEM_EXT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/odm.new.dat.br" ] && HAS_ODM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/vendor_dlkm.new.dat.br" ] && HAS_VENDOR_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/odm_dlkm.new.dat.br" ] && HAS_ODM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/system_dlkm.new.dat.br" ] && HAS_SYSTEM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/prism.new.dat.br" ] && HAS_PRISM=true
-    [ -f "$TMP_DIR/optics.new.dat.br" ] && HAS_OPTICS=true
+    [ -f "$TMP_DIR/system.new.dat${BROTLI_EXTENSION}" ] && HAS_SYSTEM=true
+    [ -f "$TMP_DIR/vendor.new.dat${BROTLI_EXTENSION}" ] && HAS_VENDOR=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/product.new.dat${BROTLI_EXTENSION}" ] && HAS_PRODUCT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/system_ext.new.dat${BROTLI_EXTENSION}" ] && HAS_SYSTEM_EXT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/odm.new.dat${BROTLI_EXTENSION}" ] && HAS_ODM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/vendor_dlkm.new.dat${BROTLI_EXTENSION}" ] && HAS_VENDOR_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/odm_dlkm.new.dat${BROTLI_EXTENSION}" ] && HAS_ODM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/system_dlkm.new.dat${BROTLI_EXTENSION}" ] && HAS_SYSTEM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/prism.new.dat${BROTLI_EXTENSION}" ] && HAS_PRISM=true
+    [ -f "$TMP_DIR/optics.new.dat${BROTLI_EXTENSION}" ] && HAS_OPTICS=true
     [ -f "$SRC_DIR/target/$TARGET_CODENAME/postinstall.edify" ] && HAS_POST_INSTALL=true
 
     {
@@ -327,13 +326,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/system", '
             fi
-            echo -n    'package_extract_file("system.transfer.list"), "system.new.dat.br", "system.patch.dat") ||'
+            echo -n    'package_extract_file("system.transfer.list"), '
+            echo -n    "\"system.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "system.patch.dat") ||'
             echo    '  abort("E1001: Failed to update system image.");'
         fi
         if $HAS_VENDOR; then
             echo -e "\n# Patch partition vendor\n"
             echo    'ui_print("Patching vendor image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("vendor"), '
@@ -342,13 +342,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/vendor", '
             fi
-            echo -n    'package_extract_file("vendor.transfer.list"), "vendor.new.dat.br", "vendor.patch.dat") ||'
+            echo -n    'package_extract_file("vendor.transfer.list"), '
+            echo -n    "\"vendor.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "vendor.patch.dat") ||'
             echo    '  abort("E2001: Failed to update vendor image.");'
         fi
         if $HAS_PRODUCT; then
             echo -e "\n# Patch partition product\n"
             echo    'ui_print("Patching product image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("product"), '
@@ -357,13 +358,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/product", '
             fi
-            echo -n    'package_extract_file("product.transfer.list"), "product.new.dat.br", "product.patch.dat") ||'
+            echo -n    'package_extract_file("product.transfer.list"), '
+            echo -n    "\"product.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "product.patch.dat") ||'
             echo    '  abort("E2001: Failed to update product image.");'
         fi
         if $HAS_SYSTEM_EXT; then
             echo -e "\n# Patch partition system_ext\n"
             echo    'ui_print("Patching system_ext image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("system_ext"), '
@@ -372,13 +374,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/system_ext", '
             fi
-            echo -n    'package_extract_file("system_ext.transfer.list"), "system_ext.new.dat.br", "system_ext.patch.dat") ||'
+            echo -n    'package_extract_file("system_ext.transfer.list"), '
+            echo -n    "\"system_ext.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "system_ext.patch.dat") ||'
             echo    '  abort("E2001: Failed to update system_ext image.");'
         fi
         if $HAS_ODM; then
             echo -e "\n# Patch partition odm\n"
             echo    'ui_print("Patching odm image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("odm"), '
@@ -387,13 +390,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/odm", '
             fi
-            echo -n    'package_extract_file("odm.transfer.list"), "odm.new.dat.br", "odm.patch.dat") ||'
+            echo -n    'package_extract_file("odm.transfer.list"), '
+            echo -n    "\"odm.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "odm.patch.dat") ||'
             echo    '  abort("E2001: Failed to update odm image.");'
         fi
         if $HAS_VENDOR_DLKM; then
             echo -e "\n# Patch partition vendor_dlkm\n"
             echo    'ui_print("Patching vendor_dlkm image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("vendor_dlkm"), '
@@ -402,13 +406,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/vendor_dlkm", '
             fi
-            echo -n    'package_extract_file("vendor_dlkm.transfer.list"), "vendor_dlkm.new.dat.br", "vendor_dlkm.patch.dat") ||'
+            echo -n    'package_extract_file("vendor_dlkm.transfer.list"), '
+            echo -n    "\"vendor_dlkm.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "vendor_dlkm.patch.dat") ||'
             echo    '  abort("E2001: Failed to update vendor_dlkm image.");'
         fi
         if $HAS_ODM_DLKM; then
             echo -e "\n# Patch partition odm_dlkm\n"
             echo    'ui_print("Patching odm_dlkm image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("odm_dlkm"), '
@@ -417,13 +422,14 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/odm_dlkm", '
             fi
-            echo -n    'package_extract_file("odm_dlkm.transfer.list"), "odm_dlkm.new.dat.br", "odm_dlkm.patch.dat") ||'
+            echo -n    'package_extract_file("odm_dlkm.transfer.list"), '
+            echo -n    "\"odm_dlkm.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "odm_dlkm.patch.dat") ||'
             echo    '  abort("E2001: Failed to update odm_dlkm image.");'
         fi
         if $HAS_SYSTEM_DLKM; then
             echo -e "\n# Patch partition system_dlkm\n"
             echo    'ui_print("Patching system_dlkm image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
                 echo -n    'map_partition("system_dlkm"), '
@@ -432,29 +438,33 @@ GENERATE_UPDATER_SCRIPT()
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
                 echo -n    '/system_dlkm", '
             fi
-            echo -n    'package_extract_file("system_dlkm.transfer.list"), "system_dlkm.new.dat.br", "system_dlkm.patch.dat") ||'
+            echo -n    'package_extract_file("system_dlkm.transfer.list"), '
+            echo -n    "\"system_dlkm.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "system_dlkm.patch.dat") ||'
             echo    '  abort("E2001: Failed to update system_dlkm image.");'
         fi
         if $HAS_PRISM; then
             echo -e "\n# Patch partition prism\n"
             echo    'ui_print("Patching prism image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             echo -n    '"'
             echo -n    "$TARGET_BOOT_DEVICE_PATH"
             echo -n    '/prism", '
-            echo -n    'package_extract_file("prism.transfer.list"), "prism.new.dat.br", "prism.patch.dat") ||'
+            echo -n    'package_extract_file("prism.transfer.list"), '
+            echo -n    "\"prism.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "prism.patch.dat") ||'
             echo    '  abort("E2001: Failed to update prism image.");'
         fi
         if $HAS_OPTICS; then
             echo -e "\n# Patch partition optics\n"
             echo    'ui_print("Patching optics image unconditionally...");'
-            echo    'show_progress(0.100000, 0);'
             echo -n    'block_image_update('
             echo -n    '"'
             echo -n    "$TARGET_BOOT_DEVICE_PATH"
             echo -n    '/optics", '
-            echo -n    'package_extract_file("optics.transfer.list"), "optics.new.dat.br", "optics.patch.dat") ||'
+            echo -n    'package_extract_file("optics.transfer.list"), '
+            echo -n    "\"optics.new.dat${BROTLI_EXTENSION}\""
+            echo       ', "optics.patch.dat") ||'
             echo    '  abort("E2001: Failed to update optics image.");'
         fi
         if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
@@ -462,6 +472,7 @@ GENERATE_UPDATER_SCRIPT()
         else
             echo -e "\n"
         fi
+        echo    'set_progress(0);'
         if $HAS_DTB; then
             echo    'ui_print("Full Patching dtb.img img...");'
             echo -n 'package_extract_file("dtb.img", "'
@@ -512,8 +523,8 @@ GENERATE_UPDATER_SCRIPT()
         echo    'run_program("/tmp/scripts/cleanup.sh");'
 
         echo -e "\n"
-        echo    'set_progress(1.000000);'
-        echo    'ui_print("****************************************");'
+        echo    'set_progress(1);'
+        echo    'ui_print("****************************************************");'
         echo    'ui_print(" ");'
     } > "$SCRIPT_FILE"
 }
@@ -534,11 +545,6 @@ PRINT_HEADER()
     else
         ONEUI_VERSION="$MAJOR.$MINOR"
     fi
-    echo    'ui_print(" ");'
-    echo    'ui_print(" ");'
-    echo    'ui_print(" ");'
-    echo    'ui_print(" ");'
-    echo    'ui_print(" ");'
     echo    'ui_print(" ");'
     echo    'ui_print(" ");'
     echo    'ui_print(" ");'
@@ -595,8 +601,8 @@ PRINT_HEADER()
     echo    'ui_print("If you wish to proceed with the installer, please press the Volume UP button.");'
     echo    'ui_print("Otherwise, hold the Volume DOWN + POWER buttons for 7 seconds to force reboot.");'
     echo    'assert(run_program("/sbin/sh", "-c", "while true; do getevent -lc 1 | grep -q -m1 '\''KEY_VOLUMEUP'\'' && exit 0; sleep 1; done"));'
-    echo    'ui_print("Volume UP detected. Proceeding!");'
     echo    'ui_print("****************************************************");'
+    echo    'ui_print("Volume UP detected. Proceeding!");'
 }
 # ]
 
@@ -613,7 +619,7 @@ while IFS= read -r f; do
 
     (
         LOG_STEP_IN "- Building $PARTITION.img"
-        if [[ "$PARTITION" == "system" || "$PARTITION" == "prism" || "$PARTITION" == "optics" ]]; then
+        if [[ "$PARTITION" == "system" ||"$PARTITION" == "prism" || "$PARTITION" == "optics" ]]; then
             FILESYSTEM_TYPE="ext4"
         else
             FILESYSTEM_TYPE="$TARGET_OS_FILE_SYSTEM"

@@ -5,6 +5,9 @@ REGION=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 2)
 VALUE="$(GET_PROP "$WORK_DIR/system/system/build.prop" "ro.build.display.id")"
 SET_PROP "system" "ro.build.display.id" "EternityROM $ROM_VERSION $ROM_COMMIT ($VALUE)"
 
+SET_PROP "system" "ro.eternityrom.version" "$ROM_VERSION"
+SET_PROP "system" "ro.eternityrom.codename" "$ROM_CODENAME"
+
 # Disable FRP
 SET_PROP "product" "ro.frp.pst" ""
 # N10 doesn't have product partition on stock so this prop was moved to vendor 

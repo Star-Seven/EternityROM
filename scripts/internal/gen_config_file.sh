@@ -38,13 +38,8 @@ GET_BUILD_VAR()
 
 IS_ETERNITYROM_CERT_AVAILABLE()
 {
-    local PLATFORM_KEY_SHA1="9a98bb3e23de3e84843a23e31a560407e19946f7"
-
     local USES_ETERNITYROM_CERT="false"
-    if [[ "$(sha1sum "$SRC_DIR/security/eternityrom_platform.pk8" 2> /dev/null | cut -d " " -f 1)" == "$PLATFORM_KEY_SHA1" ]]; then
-        USES_ETERNITYROM_CERT="true"
-    fi
-
+    [ -f "$SRC_DIR/security/eternityrom_platform.pk8" ] && USES_ETERNITYROM_CERT="true"
     echo "$USES_ETERNITYROM_CERT"
 }
 # ]

@@ -636,7 +636,7 @@ while IFS= read -r f; do
 
     (
         LOG_STEP_IN "- Building $PARTITION.img"
-        if [[ "$PARTITION" == "system" ||"$PARTITION" == "prism" || "$PARTITION" == "optics" ]]; then
+        if [[ "$PARTITION" == "system" || "$PARTITION" == "prism" || "$PARTITION" == "optics" ]]; then
             FILESYSTEM_TYPE="ext4"
         else
             FILESYSTEM_TYPE="$TARGET_OS_FILE_SYSTEM"
@@ -716,7 +716,7 @@ find . -type f \( -name "*.new.dat.br" -o -name "*.patch.dat" -o -name "META-INF
 META_INF="./META-INF"
 
 # Add batches
-EVAL "7z a -tzip -mx=9 -mmt=$(nproc --all) \"$TMP_DIR/rom.zip\" @\"compressed.txt\""
+EVAL "7z a -tzip -mx=6 -mmt=$(nproc --all) \"$TMP_DIR/rom.zip\" @\"compressed.txt\""
 EVAL "7z a -tzip -mx=0 -mmt=$(nproc --all) \"$TMP_DIR/rom.zip\" @\"stored.txt\" \"$META_INF\""
 
 if ! $DEBUG; then

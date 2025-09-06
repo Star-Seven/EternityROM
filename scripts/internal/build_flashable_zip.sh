@@ -705,28 +705,13 @@ LOG "- Generating OTA metadata"
 GENERATE_OTA_METADATA
 
 LOG "- Creating zip"
-EVAL "rm -f \"$OUT_DIR/rom.zip\"" || exit 1
-pushd "$TMP_DIR" > /dev/null
-
-# 1. Compressed files (everything except zips, special dat files, META-INF)
-find . -type f ! -name "*.new.dat.br" ! -name "*.patch.dat" > compressed.txt
-
-# 2. Stored files (special dat files + META-INF folder)
-find . -type f \( -name "*.new.dat.br" -o -name "*.patch.dat" -o -name "META-INF" \) > stored.txt
-META_INF="./META-INF"
-
-# Add batches
-EVAL "7z a -tzip -mx=6 -mmt=$(nproc --all) \"$TMP_DIR/rom.zip\" @\"compressed.txt\""
-EVAL "7z a -tzip -mx=0 -mmt=$(nproc --all) \"$TMP_DIR/rom.zip\" @\"stored.txt\" \"$META_INF\""
-
-if ! $DEBUG; then
-    LOG "- Signing zip"
-    EVAL "signapk -w \"$PUBLIC_KEY_PATH\" \"$PRIVATE_KEY_PATH\" \"$TMP_DIR/rom.zip\" \"$OUT_DIR/$FILE_NAME\"" || exit 1
-    rm -f "$TMP_DIR/rom.zip"
+[ -f "$OUT_DIR/$ZIP_FILE_NAME" ] && rm -f "$OUT_DIR/$ZIP_FILE_NAME"
+cd "$TMP_DIR"
+if [ "$NO_COMPRESSION" = "false" ]; then
+    zip -rq ../$ZIP_FILE_NAME ./*
 else
-    mv -f "$TMP_DIR/rom.zip" "$OUT_DIR/$FILE_NAME"
+    zip -rq0 --store ../$ZIP_FILE_NAME ./*
 fi
-
-popd > /dev/null
+cd - &> /dev/null
 
 exit 0
